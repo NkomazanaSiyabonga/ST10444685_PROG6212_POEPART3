@@ -1,0 +1,195 @@
+﻿@{
+    ViewData["Title"] = "Claims Management System";
+}
+
+<div class="container-fluid bg-primary text-white py-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold mb-4">Academic Claims Management</h1>
+        <p class="lead mb-5">Streamline your claims process with our secure and efficient platform</p>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <i class="fas fa-check-circle fa-2x mb-3"></i>
+                            <h5>Easy Submission</h5>
+                            <small>Submit claims in minutes</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <i class="fas fa-shield-alt fa-2x mb-3"></i>
+                            <h5>Secure</h5>
+                            <small>Bank-level security</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <i class="fas fa-clock fa-2x mb-3"></i>
+                            <h5>Fast Processing</h5>
+                            <small>Quick approval workflow</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mb-5">
+            <h2 class="fw-bold text-primary mb-3">Select Your Role</h2>
+            <p class="text-muted">Choose your role to access the appropriate features</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Lecturer Card -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="icon-wrapper bg-primary mb-4">
+                        <i class="fas fa-chalkboard-teacher fa-2x text-white"></i>
+                    </div>
+                    <h4 class="card-title text-primary">Lecturer</h4>
+                    <p class="card-text text-muted mb-4">
+                        Submit claims, upload documents, and track your claim status.
+                    </p>
+                    <div class="features mb-4">
+                        <small class="d-block text-muted mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Submit claims anytime
+                        </small>
+                        <small class="d-block text-muted mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Upload supporting documents
+                        </small>
+                        <small class="d-block text-muted">
+                            <i class="fas fa-check text-success me-2"></i>Track claim status
+                        </small>
+                    </div>
+                    <a href="@Url.Action("Login", "Account", new { role = "Lecturer" })" class="btn btn-primary w-100">
+                        Enter as Lecturer
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coordinator Card -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="icon-wrapper bg-warning mb-4">
+                        <i class="fas fa-user-tie fa-2x text-white"></i>
+                    </div>
+                    <h4 class="card-title text-warning">Coordinator</h4>
+                    <p class="card-text text-muted mb-4">
+                        Verify and review claims submitted by lecturers in your programme.
+                    </p>
+                    <div class="features mb-4">
+                        <small class="d-block text-muted mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Review pending claims
+                        </small>
+                        <small class="d-block text-muted mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Access documents
+                        </small>
+                        <small class="d-block text-muted">
+                            <i class="fas fa-check text-success me-2"></i>Verify or reject claims
+                        </small>
+                    </div>
+                    <a href="@Url.Action("Login", "Account", new { role = "Coordinator" })" class="btn btn-warning text-white w-100">
+                        Enter as Coordinator
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manager Card -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="icon-wrapper bg-success mb-4">
+                        <i class="fas fa-briefcase fa-2x text-white"></i>
+                    </div>
+                    <h4 class="card-title text-success">Manager</h4>
+                    <p class="card-text text-muted mb-4">
+                        Approve or reject verified claims and manage the overall process.
+                    </p>
+                    <div class="features mb-4">
+                        <small class="d-block text-muted mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Final approval authority
+                        </small>
+                        <small class="d-block text-muted mb-2">
+                            <i class="fas fa-check text-success me-2"></i>Comprehensive oversight
+                        </small>
+                        <small class="d-block text-muted">
+                            <i class="fas fa-check text-success me-2"></i>Process management
+                        </small>
+                    </div>
+                    <a href="@Url.Action("Login", "Account", new { role = "Manager" })" class="btn btn-success w-100">
+                        Enter as Manager
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration CTA -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body text-center py-4">
+                    <h5 class="card-title mb-3">New to the system?</h5>
+                    <p class="card-text text-muted mb-4">Create an account to get started with managing your claims</p>
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .icon-wrapper {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .bg-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: none;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+        border: none;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        border: none;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+    .features {
+        text-align: left;
+    }
+</style>

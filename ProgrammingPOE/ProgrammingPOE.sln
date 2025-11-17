@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgrammingPOE", "ProgrammingPOE\ProgrammingPOE.csproj", "{AC67EA9E-1E3B-443C-ADFA-954DEC7DCDAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgrammingPOE.Tests", "ProgrammingPOE.Tests\ProgrammingPOE.Tests.csproj", "{062AEB19-26EF-4F52-A231-A91B2F069FE0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC67EA9E-1E3B-443C-ADFA-954DEC7DCDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC67EA9E-1E3B-443C-ADFA-954DEC7DCDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC67EA9E-1E3B-443C-ADFA-954DEC7DCDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC67EA9E-1E3B-443C-ADFA-954DEC7DCDAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{062AEB19-26EF-4F52-A231-A91B2F069FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{062AEB19-26EF-4F52-A231-A91B2F069FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{062AEB19-26EF-4F52-A231-A91B2F069FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{062AEB19-26EF-4F52-A231-A91B2F069FE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF28C36A-60A9-434C-9054-1AEC53A6BA26}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,86 @@
+﻿@model List<ProgrammingPOE.Models.Claim>
+@{
+    ViewData["Title"] = "My Claims";
+}
+
+<h2>My Claims</h2>
+<hr />
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <p>You haven't submitted any claims yet.</p>
+        <a href="@Url.Action("Create")" class="btn btn-primary">Submit Your First Claim</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Submission Date</th>
+                    <th>Hours</th>
+                    <th>Rate</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Documents</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>@claim.Id</td>
+                        <td>@claim.SubmissionDate.ToString("dd MMM yyyy")</td>
+                        <td>@claim.HoursWorked</td>
+                        <td>R @claim.HourlyRate</td>
+                        <td>R @claim.TotalAmount</td>
+                        <td>
+                            @switch (claim.Status)
+                            {
+                                case ProgrammingPOE.Models.ClaimStatus.Submitted:
+                                    <span class="badge bg-warning">Pending</span>
+                                    break;
+                                case ProgrammingPOE.Models.ClaimStatus.Verified:
+                                    <span class="badge bg-info">Verified</span>
+                                    break;
+                                case ProgrammingPOE.Models.ClaimStatus.Approved:
+                                    <span class="badge bg-success">Approved</span>
+                                    break;
+                                case ProgrammingPOE.Models.ClaimStatus.Rejected:
+                                    <span class="badge bg-danger">Rejected</span>
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            @if (claim.SupportingDocuments.Any())
+                            {
+                                @foreach (var doc in claim.SupportingDocuments)
+                                {
+                                    <div class="mb-1">
+                                        <a href="@Url.Action("Download", "Documents", new { fileName = doc.FilePath })"
+                                           class="btn btn-sm btn-outline-primary"
+                                           target="_blank">
+                                            <i class="fas fa-download me-1"></i>@doc.FileName
+                                        </a>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">No documents</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<div class="mt-3">
+    <a href="@Url.Action("Create")" class="btn btn-primary">Submit New Claim</a>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Back to Home</a>
+</div>

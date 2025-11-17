@@ -1,0 +1,67 @@
+﻿@model ProgrammingPOE.ViewModels.ClaimViewModel
+@{
+    ViewData["Title"] = "Submit Claim";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2>Submit New Claim</h2>
+        <hr />
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label asp-for="LecturerName" class="control-label"></label>
+                <input asp-for="LecturerName" class="form-control" />
+                <span asp-validation-for="LecturerName" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="HoursWorked" class="control-label"></label>
+                        <input asp-for="HoursWorked" class="form-control" type="number" step="0.5" />
+                        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label asp-for="HourlyRate" class="control-label"></label>
+                        <input asp-for="HourlyRate" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="AdditionalNotes" class="control-label">Additional Notes <span class="text-danger">*</span></label>
+<textarea asp-for="AdditionalNotes" class="form-control" rows="4"
+          placeholder="Required: Please provide details about the work performed..."></textarea>
+                <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="control-label">Supporting Documents</label>
+                <input type="file" name="files" multiple class="form-control"
+                       accept=".pdf,.docx,.xlsx" />
+                <small class="form-text text-muted">
+                    Allowed file types: PDF, DOCX, XLSX. Maximum file size: 5MB each.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    📤 Submit Claim
+                </button>
+                <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
+                    View My Claims
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

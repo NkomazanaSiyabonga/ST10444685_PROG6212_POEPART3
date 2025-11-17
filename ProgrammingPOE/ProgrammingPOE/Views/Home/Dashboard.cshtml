@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var userId = Context.Session.GetString("UserId");
+    var userName = Context.Session.GetString("UserName");
+    var userRole = Context.Session.GetString("UserRole");
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>Welcome, @userName!</h1>
+                <span class="badge bg-primary fs-6">@userRole</span>
+            </div>
+            <p class="lead">Manage your claims and activities from here</p>
+        </div>
+    </div>
+
+    @if (userRole == "Lecturer")
+    {
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-plus-circle fa-3x mb-3"></i>
+                        <h5>Submit New Claim</h5>
+                        <p>Create and submit a new claim for your work</p>
+                        <a href="@Url.Action("Create", "Claims")" class="btn btn-light">Submit Claim</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card bg-info text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-list fa-3x mb-3"></i>
+                        <h5>View My Claims</h5>
+                        <p>Track the status of your submitted claims</p>
+                        <a href="@Url.Action("Index", "Claims")" class="btn btn-light">View Claims</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (userRole == "Coordinator")
+    {
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body text-center">
+                        <i class="fas fa-tasks fa-3x mb-3"></i>
+                        <h5>Pending Claims</h5>
+                        <p>Review and verify claims submitted by lecturers</p>
+                        <a href="@Url.Action("Index", "Coordinator")" class="btn btn-dark">Review Claims</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (userRole == "Manager")
+    {
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-3x mb-3"></i>
+                        <h5>Approve Claims</h5>
+                        <p>Approve or reject verified claims</p>
+                        <a href="@Url.Action("Index", "Manager")" class="btn btn-light">Manage Claims</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

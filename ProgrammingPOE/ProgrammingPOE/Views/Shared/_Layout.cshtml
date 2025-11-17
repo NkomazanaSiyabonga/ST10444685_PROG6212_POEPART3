@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Claims Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-file-invoice-dollar me-2"></i>Claims Management
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userRole = Context.User.FindFirst("Role")?.Value;
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Dashboard">
+                                    <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                                </a>
+                            </li>
+
+                            <!-- Only show Lecturer-specific tabs when user is Lecturer AND in Lecturer context -->
+                            @if (userRole == "Lecturer")
+                            {
+                                <!-- Check if we're in the Claims controller (Lecturer area) -->
+                                var isInClaimsSection = ViewContext.RouteData.Values["Controller"]?.ToString() == "Claims";
+
+                                @if (isInClaimsSection)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Claims" asp-action="Create">
+                                            <i class="fas fa-plus-circle me-1"></i>Submit Claim
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-controller="Claims" asp-action="Index">
+                                            <i class="fas fa-list me-1"></i>My Claims
+                                        </a>
+                                    </li>
+                                }
+                            }
+                            else if (userRole == "Coordinator")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Coordinator" asp-action="Index">
+                                        <i class="fas fa-tasks me-1"></i>Review Claims
+                                    </a>
+                                </li>
+                            }
+                            else if (userRole == "HRManager")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="HRManager" asp-action="Index">
+                                        <i class="fas fa-check-circle me-1"></i>Approve Claims
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="HRManager" asp-action="UserManagement">
+                                        <i class="fas fa-users me-1"></i>User Management
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-home me-1"></i>Home
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Claims Management System
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
