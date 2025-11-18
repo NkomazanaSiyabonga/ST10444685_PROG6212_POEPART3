@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "User Management";
+}
+
+<h2>User Management</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Add New User</h5>
+            </div>
+            <div class="card-body">
+                <form id="addUserForm">
+                    <div class="mb-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" id="role" required>
+                            <option value="">Select Role</option>
+                            <option value="Lecturer">Lecturer</option>
+                            <option value="Coordinator">Coordinator</option>
+                            <option value="HRManager">HR Manager</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Default Password</label>
+                        <input type="text" class="form-control" id="password" value="Password123!" readonly>
+                        <small class="form-text text-muted">Users will be prompted to change password on first login.</small>
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-user-plus me-1"></i>Add User
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">System Users</h5>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    User management functionality will be integrated with database in the next phase.
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Demo Lecturer
+                        <span class="badge bg-primary">Lecturer</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Coordinator User
+                        <span class="badge bg-warning">Coordinator</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        HR Manager
+                        <span class="badge bg-success">HR Manager</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('addUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('User added successfully! This will be integrated with database in the next phase.');
+            this.reset();
+        });
+    </script>
+}
