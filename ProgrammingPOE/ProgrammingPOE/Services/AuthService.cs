@@ -47,5 +47,58 @@
         {
             return _users.FirstOrDefault(u => u.Id == userId);
         }
+
+        // Add these methods to AuthService class
+        public List<User> GetAllUsers()
+        {
+            return _users.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
+        }
+
+        public User CreateUser(string firstName, string lastName, string email, string role)
+        {
+            // Check if user already exists
+            if (_users.Any(u => u.Email.ToLower() == email.ToLower()))
+            {
+                throw new Exception("User with this email already exists.");
+            }
+
+            var user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                Role = role,
+                CreatedAt = DateTime.Now
+            };
+
+            _users.Add(user);
+            // Default password for new users
+            _passwords[user.Id] = "Password123!";
+
+            return user;
+        }
+
+        public void UpdateUser(string userId, string firstName, string lastName, string email, string role)
+        {
+            var user = _users.FirstOrDefault(u => u.Id == userId);
+            if (user != null)
+            {
+                user.FirstName = firstName;
+                user.LastName = lastName;
+                user.Email = email;
+                user.Role = role;
+            }
+        }
+
+        public void DeleteUser(string userId)
+        {
+            var user = _users.FirstOrDefault(u => u.Id == userId);
+            if (user != null)
+            {
+                _users.Remove(user);
+                _passwords.Remove(userId);
+            }
+        }
     }
 }
