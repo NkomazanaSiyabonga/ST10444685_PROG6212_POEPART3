@@ -1,5 +1,110 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<ProgrammingPOE.Models.Claim>
 @{
+    ViewData["Title"] = "HR Manager - Approved Claims";
 }
+
+<h2>Verified Claims Awaiting HR Approval</h2>
+<hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        <p>No verified claims awaiting HR approval.</p>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Lecturer</th>
+                    <th>Submission Date</th>
+                    <th>Hours</th>
+                    <th>Rate</th>
+                    <th>Total Amount</th>
+                    <th>Verified By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>@claim.Id</td>
+                        <td>@claim.LecturerName</td>
+                        <td>@claim.SubmissionDate.ToString("dd MMM yyyy")</td>
+                        <td>@claim.HoursWorked</td>
+                        <td>R @claim.HourlyRate</td>
+                        <td>R @claim.TotalAmount</td>
+                        <td>@claim.VerifiedBy</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form method="post" asp-action="ApproveClaim" class="d-inline">
+                                    <input type="hidden" name="id" value="@claim.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fas fa-check me-1"></i>Approve
+                                    </button>
+                                </form>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#rejectModal@(claim.Id)">
+                                    <i class="fas fa-times me-1"></i>Reject
+                                </button>
+                                <a href="@Url.Action("Details", new { id = claim.Id })"
+                                   class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye me-1"></i>Details
+                                </a>
+                            </div>
+
+                            <!-- Reject Modal -->
+                            <div class="modal fade" id="rejectModal@(claim.Id)" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Reject Claim</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <form method="post" asp-action="RejectClaim">
+                                            <div class="modal-body">
+                                                <input type="hidden" name="id" value="@claim.Id" />
+                                                <div class="form-group">
+                                                    <label class="form-label">Rejection Reason:</label>
+                                                    <textarea name="rejectionNotes" class="form-control"
+                                                      rows="4"
+                                                      placeholder="Please provide reason for rejection..."
+                                                      required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Reject Claim</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<div class="mt-3">
+    <a href="@Url.Action("UserManagement")" class="btn btn-outline-primary">
+        <i class="fas fa-users me-1"></i>User Management
+    </a>
+    <a href="@Url.Action("Reports")" class="btn btn-outline-secondary">
+        <i class="fas fa-chart-bar me-1"></i>Generate Reports
+    </a>
+</div>

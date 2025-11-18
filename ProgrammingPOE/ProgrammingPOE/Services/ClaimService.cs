@@ -16,8 +16,26 @@ namespace ProgrammingPOE.Services
             _environment = environment;
         }
 
+        // Add this field to ClaimService class
+        private readonly IValidationService _validationService;
+
+        // Update constructor
+        public ClaimService(IWebHostEnvironment environment, IValidationService validationService)
+        {
+            _environment = environment;
+            _validationService = validationService;
+        }
+
+        // Update CreateClaim method to include validation
         public Claim CreateClaim(Claim claim, string userId, List<IFormFile> files)
         {
+            // Validate claim before processing
+            var validation = _validationService.ValidateClaim(claim);
+            if (!validation.IsValid)
+            {
+                throw new Exception($"Validation failed: {validation.ErrorMessage}");
+            }
+
             claim.Id = _nextClaimId++;
             claim.UserId = userId;
             claim.SubmissionDate = DateTime.Now;
@@ -25,12 +43,12 @@ namespace ProgrammingPOE.Services
 
             _claims.Add(claim);
 
-            // Handle file uploads
+            // Handle file uploads (existing code)
             if (files != null && files.Any())
             {
                 foreach (var file in files)
                 {
-                    if (file.Length > 0 && file.Length < 5 * 1024 * 1024) // 5MB limit
+                    if (file.Length > 0 && file.Length < 5 * 1024 * 1024)
                     {
                         var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
                         if (!Directory.Exists(uploadsFolder))
@@ -143,7 +161,6 @@ namespace ProgrammingPOE.Services
             };
         }
 
-        // Add this method to ClaimService class
         public decimal GetLecturerHourlyRate(string lecturerName)
         {
             // In a real application, this would come from a database
@@ -157,6 +174,60 @@ namespace ProgrammingPOE.Services
     };
 
             return rateMap.ContainsKey(lecturerName) ? rateMap[lecturerName] : 150.00m;
+        }
+    }
+
+    // Add these methods to ClaimService class
+public List<Claim> GetVerifiedClaims()
+        {
+            var claims = _claims
+                .Where(c => c.Status == ClaimStatus.Verified)
+                .OrderBy(c => c.SubmissionDate)
+                .ToList();
+
+            foreach (var claim in claims)
+            {
+                claim.SupportingDocuments = _documents.Where(d => d.ClaimId == claim.Id).ToList();
+            }
+
+            return claims;
+        }
+
+        public List<Claim> GetClaimsForCoordinator()
+        {
+            var claims = _claims
+                .Where(c => c.Status == ClaimStatus.Submitted || c.Status == ClaimStatus.RejectedByHR)
+                .OrderBy(c => c.SubmissionDate)
+                .ToList();
+
+            foreach (var claim in claims)
+            {
+                claim.SupportingDocuments = _documents.Where(d => d.ClaimId == claim.Id).ToList();
+            }
+
+            return claims;
+        }
+
+        public void RejectClaim(int claimId, ClaimStatus status, string rejectedBy, string rejectionNotes)
+        {
+            var claim = _claims.FirstOrDefault(c => c.Id == claimId);
+            if (claim != null)
+            {
+                claim.Status = status;
+                claim.RejectedBy = rejectedBy;
+                claim.RejectionNotes = rejectionNotes;
+            }
+        }
+
+        public void ReturnClaimToLecturer(int claimId, string returnedBy, string correctionNotes)
+        {
+            var claim = _claims.FirstOrDefault(c => c.Id == claimId);
+            if (claim != null)
+            {
+                claim.Status = ClaimStatus.ReturnedForCorrection;
+                claim.RejectedBy = returnedBy;
+                claim.RejectionNotes = correctionNotes;
+            }
         }
     }
 }

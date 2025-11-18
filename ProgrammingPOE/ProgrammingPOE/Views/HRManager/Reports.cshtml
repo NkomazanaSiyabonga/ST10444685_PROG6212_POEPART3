@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "HR Reports";
+}
+
+<h2>Automated Reports</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-file-invoice-dollar fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Monthly Claims Report</h5>
+                <p class="card-text">Generate comprehensive monthly claims summary</p>
+                <button class="btn btn-primary" onclick="generateReport('monthly')">
+                    <i class="fas fa-download me-1"></i>Generate PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-chart-bar fa-3x text-success mb-3"></i>
+                <h5 class="card-title">Approval Statistics</h5>
+                <p class="card-text">View approval rates and processing times</p>
+                <button class="btn btn-success" onclick="generateReport('statistics')">
+                    <i class="fas fa-chart-line me-1"></i>View Statistics
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-users fa-3x text-info mb-3"></i>
+                <h5 class="card-title">Lecturer Performance</h5>
+                <p class="card-text">Lecturer claim submission analysis</p>
+                <button class="btn btn-info" onclick="generateReport('lecturer')">
+                    <i class="fas fa-user-tie me-1"></i>Generate Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">Quick Statistics</h5>
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h3 class="text-primary" id="totalClaims">0</h3>
+                    <p class="mb-0">Total Claims This Month</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h3 class="text-success" id="approvedClaims">0</h3>
+                    <p class="mb-0">Approved Claims</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h3 class="text-warning" id="pendingClaims">0</h3>
+                    <p class="mb-0">Pending Approval</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="border rounded p-3">
+                    <h3 class="text-danger" id="rejectedClaims">0</h3>
+                    <p class="mb-0">Rejected Claims</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">Export Data</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Date Range</label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="startDate">
+                        <span class="input-group-text">to</span>
+                        <input type="date" class="form-control" id="endDate">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Export Format</label>
+                    <select class="form-select" id="exportFormat">
+                        <option value="pdf">PDF Document</option>
+                        <option value="excel">Excel Spreadsheet</option>
+                        <option value="csv">CSV File</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" onclick="exportData()">
+            <i class="fas fa-file-export me-1"></i>Export Data
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Simulate report generation
+        function generateReport(type) {
+            const reports = {
+                'monthly': 'Monthly Claims Report',
+                'statistics': 'Approval Statistics Report',
+                'lecturer': 'Lecturer Performance Report'
+            };
+
+            alert(`Generating ${reports[type]}... This feature will be fully integrated with database.`);
+
+            // Simulate loading
+            setTimeout(() => {
+                alert(`${reports[type]} generated successfully!`);
+            }, 1000);
+        }
+
+        // Simulate statistics
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('totalClaims').textContent = '24';
+            document.getElementById('approvedClaims').textContent = '18';
+            document.getElementById('pendingClaims').textContent = '4';
+            document.getElementById('rejectedClaims').textContent = '2';
+        });
+
+        function exportData() {
+            const format = document.getElementById('exportFormat').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            if (!startDate || !endDate) {
+                alert('Please select a date range');
+                return;
+            }
+
+            alert(`Exporting data from ${startDate} to ${endDate} as ${format.toUpperCase()}...`);
+        }
+    </script>
+}

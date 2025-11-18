@@ -47,4 +47,6 @@ app.MapControllerRoute(
 
 builder.Services.AddScoped<IValidationService, ValidationService>();
 
+builder.Services.AddScoped<IReportService, ReportService>();
+
 app.Run();

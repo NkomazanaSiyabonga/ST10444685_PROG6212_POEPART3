@@ -1,15 +1,22 @@
 ﻿@model List<ProgrammingPOE.Models.Claim>
 @{
-    ViewData["Title"] = "Pending Claims - Coordinator";
+    ViewData["Title"] = "Coordinator - Claim Verification";
 }
 
-<h2>Pending Claims for Verification</h2>
+<h2>Claims Pending Coordinator Verification</h2>
 <hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
 @if (!Model.Any())
 {
     <div class="alert alert-info">
-        <p>No pending claims requiring verification.</p>
+        <p>No claims pending verification.</p>
     </div>
 }
 else
@@ -24,7 +31,7 @@ else
                     <th>Hours</th>
                     <th>Rate</th>
                     <th>Total Amount</th>
-                    <th>Documents</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -39,39 +46,103 @@ else
                         <td>R @claim.HourlyRate</td>
                         <td>R @claim.TotalAmount</td>
                         <td>
-                            @if (claim.SupportingDocuments.Any())
+                            @if (claim.Status == ProgrammingPOE.Models.ClaimStatus.RejectedByHR)
                             {
-                                @foreach (var doc in claim.SupportingDocuments)
-                                {
-                                    <div class="mb-1">
-                                        <a href="@Url.Action("Download", "Documents", new { fileName = doc.FilePath })"
-                                           class="btn btn-sm btn-outline-primary"
-                                           target="_blank"
-                                           title="Download @doc.FileName">
-                                            <i class="fas fa-download me-1"></i>@doc.FileName
-                                        </a>
-                                    </div>
-                                }
+                                <span class="badge bg-danger">Returned by HR</span>
                             }
                             else
                             {
-                                <span class="text-muted">No documents</span>
+                                <span class="badge bg-warning">Pending Verification</span>
                             }
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <form method="post" asp-action="VerifyClaim" class="d-inline">
-                                    <input type="hidden" name="id" value="@claim.Id" />
-                                    <button type="submit" class="btn btn-success btn-sm">
-                                        <i class="fas fa-check me-1"></i>Verify
-                                    </button>
-                                </form>
-                                <form method="post" asp-action="RejectClaim" class="d-inline">
-                                    <input type="hidden" name="id" value="@claim.Id" />
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                @if (claim.Status == ProgrammingPOE.Models.ClaimStatus.Submitted)
+                                {
+                                    <form method="post" asp-action="VerifyClaim" class="d-inline">
+                                        <input type="hidden" name="id" value="@claim.Id" />
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            <i class="fas fa-check me-1"></i>Verify
+                                        </button>
+                                    </form>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#rejectModal@(claim.Id)">
                                         <i class="fas fa-times me-1"></i>Reject
                                     </button>
-                                </form>
+                                }
+                                else if (claim.Status == ProgrammingPOE.Models.ClaimStatus.RejectedByHR)
+                                {
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#returnModal@(claim.Id)">
+                                        <i class="fas fa-undo me-1"></i>Return to Lecturer
+                                    </button>
+                                }
+                                <a href="@Url.Action("Details", new { id = claim.Id })"
+                                   class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye me-1"></i>Details
+                                </a>
+                            </div>
+
+                            <!-- Reject Modal -->
+                            <div class="modal fade" id="rejectModal@(claim.Id)" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Reject Claim</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <form method="post" asp-action="RejectClaim">
+                                            <div class="modal-body">
+                                                <input type="hidden" name="id" value="@claim.Id" />
+                                                <div class="form-group">
+                                                    <label class="form-label">Rejection Reason:</label>
+                                                    <textarea name="rejectionNotes" class="form-control"
+                                                      rows="4"
+                                                      placeholder="Please provide reason for rejection..."
+                                                      required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Reject Claim</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Return to Lecturer Modal -->
+                            <div class="modal fade" id="returnModal@(claim.Id)" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Return Claim to Lecturer</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <form method="post" asp-action="ReturnToLecturer">
+                                            <div class="modal-body">
+                                                <input type="hidden" name="id" value="@claim.Id" />
+                                                <div class="alert alert-info">
+                                                    <strong>HR Rejection Notes:</strong><br>
+                                                    @claim.RejectionNotes
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Additional Notes for Lecturer:</label>
+                                                    <textarea name="correctionNotes" class="form-control"
+                                                      rows="4"
+                                                      placeholder="Add any additional notes for the lecturer..."
+                                                      required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-warning">Return to Lecturer</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -80,7 +151,3 @@ else
         </table>
     </div>
 }
-
-<div class="mt-3">
-    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Back to Home</a>
-</div>
