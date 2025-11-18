@@ -142,5 +142,21 @@ namespace ProgrammingPOE.Services
                 TotalAmount = userClaims.Where(c => c.Status == ClaimStatus.Approved).Sum(c => c.TotalAmount)
             };
         }
+
+        // Add this method to ClaimService class
+        public decimal GetLecturerHourlyRate(string lecturerName)
+        {
+            // In a real application, this would come from a database
+            // For now, we'll use a simple mapping
+            var rateMap = new Dictionary<string, decimal>
+    {
+        { "Demo Lecturer", 250.00m },
+        { "John Smith", 200.00m },
+        { "Sarah Johnson", 220.00m },
+        { "Mike Wilson", 180.00m }
+    };
+
+            return rateMap.ContainsKey(lecturerName) ? rateMap[lecturerName] : 150.00m;
+        }
     }
 }

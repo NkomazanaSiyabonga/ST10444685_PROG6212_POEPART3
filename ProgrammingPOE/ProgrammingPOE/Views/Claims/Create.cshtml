@@ -8,10 +8,10 @@
         <h2>Submit New Claim</h2>
         <hr />
 
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <form asp-action="Create" method="post" enctype="multipart/form-data" id="claimForm">
             <div class="form-group mb-3">
                 <label asp-for="LecturerName" class="control-label"></label>
-                <input asp-for="LecturerName" class="form-control" />
+                <input asp-for="LecturerName" class="form-control" id="lecturerName" />
                 <span asp-validation-for="LecturerName" class="text-danger"></span>
             </div>
 
@@ -19,23 +19,37 @@
                 <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label asp-for="HoursWorked" class="control-label"></label>
-                        <input asp-for="HoursWorked" class="form-control" type="number" step="0.5" />
+                        <input asp-for="HoursWorked" class="form-control" type="number" step="0.5" id="hoursWorked" />
                         <span asp-validation-for="HoursWorked" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label asp-for="HourlyRate" class="control-label"></label>
-                        <input asp-for="HourlyRate" class="form-control" type="number" step="0.01" />
+                        <input asp-for="HourlyRate" class="form-control" type="number" step="0.01" id="hourlyRate" />
                         <span asp-validation-for="HourlyRate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auto-calculation display -->
+            <div class="alert alert-info mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Total Amount: </strong>
+                        <span id="totalAmount">R 0.00</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Status: </strong>
+                        <span id="calculationStatus">Enter hours and rate</span>
                     </div>
                 </div>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="AdditionalNotes" class="control-label">Additional Notes <span class="text-danger">*</span></label>
-<textarea asp-for="AdditionalNotes" class="form-control" rows="4"
-          placeholder="Required: Please provide details about the work performed..."></textarea>
+                <textarea asp-for="AdditionalNotes" class="form-control" rows="4"
+                          placeholder="Required: Please provide details about the work performed..."></textarea>
                 <span asp-validation-for="AdditionalNotes" class="text-danger"></span>
             </div>
 
@@ -49,7 +63,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-lg">
+                <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
                     📤 Submit Claim
                 </button>
                 <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
@@ -64,4 +78,66 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        // Auto-calculation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const hoursInput = document.getElementById('hoursWorked');
+            const rateInput = document.getElementById('hourlyRate');
+            const totalAmountSpan = document.getElementById('totalAmount');
+            const statusSpan = document.getElementById('calculationStatus');
+            const submitBtn = document.getElementById('submitBtn');
+            const lecturerNameInput = document.getElementById('lecturerName');
+
+            function calculateTotal() {
+                const hours = parseFloat(hoursInput.value) || 0;
+                const rate = parseFloat(rateInput.value) || 0;
+                const total = hours * rate;
+
+                totalAmountSpan.textContent = 'R ' + total.toFixed(2);
+
+                // Validation feedback
+                if (hours > 0 && rate > 0) {
+                    statusSpan.textContent = 'Calculation complete';
+                    statusSpan.className = 'text-success';
+                    submitBtn.disabled = false;
+                } else {
+                    statusSpan.textContent = 'Enter valid hours and rate';
+                    statusSpan.className = 'text-warning';
+                    submitBtn.disabled = true;
+                }
+
+                // Validate hours range
+                if (hours > 160) {
+                    statusSpan.textContent = 'Warning: Hours exceed maximum limit (160)';
+                    statusSpan.className = 'text-danger';
+                }
+
+                // Validate rate range
+                if (rate > 500) {
+                    statusSpan.textContent = 'Warning: Rate exceeds maximum limit (R500)';
+                    statusSpan.className = 'text-danger';
+                }
+            }
+
+            // Add event listeners for real-time calculation
+            hoursInput.addEventListener('input', calculateTotal);
+            rateInput.addEventListener('input', calculateTotal);
+
+            // Auto-populate lecturer name from session
+            function autoPopulateLecturerName() {
+                // This would typically come from your backend/session
+                // For now, we'll use a placeholder
+                if (!lecturerNameInput.value) {
+                    const userName = '@Context.Session.GetString("UserName")';
+                    if (userName) {
+                        lecturerNameInput.value = userName;
+                    }
+                }
+            }
+
+            autoPopulateLecturerName();
+            calculateTotal(); // Initial calculation
+        });
+    </script>
 }

@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj": {}
+    "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj": {
+    "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj",
+        "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj",
         "projectName": "ProgrammingPOE",
-        "projectPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj",
+        "projectPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj",
         "packagesPath": "C:\\Users\\lab_services_student\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\obj\\",
         "projectStyle": "PackageReference",

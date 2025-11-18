@@ -8615,9 +8615,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE.Tests\\ProgrammingPOE.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE.Tests\\ProgrammingPOE.Tests.csproj",
       "projectName": "ProgrammingPOE.Tests",
-      "projectPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE.Tests\\ProgrammingPOE.Tests.csproj",
+      "projectPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE.Tests\\ProgrammingPOE.Tests.csproj",
       "packagesPath": "C:\\Users\\lab_services_student\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE.Tests\\obj\\",
       "projectStyle": "PackageReference",
@@ -8640,8 +8640,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj": {
-              "projectPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj"
+            "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj": {
+              "projectPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj"
             }
           }
         }

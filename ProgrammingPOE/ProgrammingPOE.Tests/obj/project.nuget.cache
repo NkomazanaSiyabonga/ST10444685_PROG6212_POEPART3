@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JRz0lwLA69A=",
+  "dgSpecHash": "JWbn3ecK79c=",
   "success": true,
-  "projectFilePath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE.Tests\\ProgrammingPOE.Tests.csproj",
+  "projectFilePath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE.Tests\\ProgrammingPOE.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lab_services_student\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\lab_services_student\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",

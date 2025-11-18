@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProgrammingPOE.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d00676f00e51df372f01af01d5efc0af864ae46a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProgrammingPOE.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProgrammingPOE.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
