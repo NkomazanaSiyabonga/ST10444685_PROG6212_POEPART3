@@ -25,6 +25,7 @@ else
                     <th>Rate</th>
                     <th>Total Amount</th>
                     <th>Status</th>
+                    <th>Notes</th>
                     <th>Documents</th>
                 </tr>
             </thead>
@@ -49,9 +50,26 @@ else
                                 case ProgrammingPOE.Models.ClaimStatus.Approved:
                                     <span class="badge bg-success">Approved</span>
                                     break;
-                                case ProgrammingPOE.Models.ClaimStatus.Rejected:
-                                    <span class="badge bg-danger">Rejected</span>
+                                case ProgrammingPOE.Models.ClaimStatus.RejectedByCoordinator:
+                                    <span class="badge bg-danger">Rejected by Coordinator</span>
                                     break;
+                                case ProgrammingPOE.Models.ClaimStatus.RejectedByHR:
+                                    <span class="badge bg-danger">Rejected by HR</span>
+                                    break;
+                                case ProgrammingPOE.Models.ClaimStatus.ReturnedForCorrection:
+                                    <span class="badge bg-warning">Correction Required</span>
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(claim.RejectionNotes))
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-info"
+                                        data-bs-toggle="popover"
+                                        data-bs-title="Rejection Notes"
+                                        data-bs-content="@claim.RejectionNotes">
+                                    <i class="fas fa-comment me-1"></i>View Notes
+                                </button>
                             }
                         </td>
                         <td>
@@ -84,3 +102,13 @@ else
     <a href="@Url.Action("Create")" class="btn btn-primary">Submit New Claim</a>
     <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Back to Home</a>
 </div>
+
+@section Scripts {
+    <script>
+        // Initialize popovers
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
+}
