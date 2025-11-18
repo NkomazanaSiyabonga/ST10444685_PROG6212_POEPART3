@@ -45,4 +45,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+builder.Services.AddScoped<IValidationService, ValidationService>();
+
 app.Run();
