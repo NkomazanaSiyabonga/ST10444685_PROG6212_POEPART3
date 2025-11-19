@@ -74,5 +74,47 @@ namespace ProgrammingPOE.Services
 
             return (true, "Within monthly limit");
         }
+
+        // Add these methods to ValidationService class
+        public (bool IsValid, string ErrorMessage) ValidateForCoordinator(Claim claim)
+        {
+            // Check if hours are reasonable for academic work
+            if (claim.HoursWorked > 80 && claim.TotalAmount > 20000)
+            {
+                return (false, "High hours and amount detected. Requires additional verification.");
+            }
+
+            // Check if hourly rate is within department guidelines
+            if (claim.HourlyRate > 300)
+            {
+                return (false, "Hourly rate exceeds department guidelines. Requires HR approval.");
+            }
+
+            // Check for missing supporting documents for high amounts
+            if (claim.TotalAmount > 10000)
+            {
+                // This would check actual documents in a real application
+                return (true, "High amount claim - ensure supporting documents are attached.");
+            }
+
+            return (true, "Claim meets coordinator approval criteria");
+        }
+
+        public (bool IsValid, string ErrorMessage) ValidateBulkClaims(List<Claim> claims)
+        {
+            var totalAmount = claims.Sum(c => c.TotalAmount);
+            if (totalAmount > 50000)
+            {
+                return (false, "Bulk approval would exceed monthly budget limit");
+            }
+
+            var highRiskClaims = claims.Count(c => c.TotalAmount > 10000);
+            if (highRiskClaims > 2)
+            {
+                return (false, "Too many high-value claims in bulk selection");
+            }
+
+            return (true, "Bulk approval validation passed");
+        }
     }
 }

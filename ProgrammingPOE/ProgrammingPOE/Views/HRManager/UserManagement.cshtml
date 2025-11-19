@@ -1,9 +1,24 @@
-﻿@{
+﻿@model List<ProgrammingPOE.Services.User>
+@{
     ViewData["Title"] = "User Management";
 }
 
 <h2>User Management</h2>
 <hr />
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <div class="row">
     <div class="col-md-6">
@@ -12,22 +27,23 @@
                 <h5 class="mb-0">Add New User</h5>
             </div>
             <div class="card-body">
-                <form id="addUserForm">
+                <form method="post" asp-action="CreateUser">
+                    @Html.AntiForgeryToken()
                     <div class="mb-3">
                         <label class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstName" required>
+                        <input type="text" class="form-control" name="firstName" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" required>
+                        <input type="text" class="form-control" name="lastName" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <input type="email" class="form-control" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Role</label>
-                        <select class="form-select" id="role" required>
+                        <select class="form-select" name="role" required>
                             <option value="">Select Role</option>
                             <option value="Lecturer">Lecturer</option>
                             <option value="Coordinator">Coordinator</option>
@@ -36,8 +52,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Default Password</label>
-                        <input type="text" class="form-control" id="password" value="Password123!" readonly>
-                        <small class="form-text text-muted">Users will be prompted to change password on first login.</small>
+                        <input type="text" class="form-control" value="Password123!" readonly>
+                        <small class="form-text text-muted">Users will use this password for first login.</small>
                     </div>
                     <button type="submit" class="btn btn-success">
                         <i class="fas fa-user-plus me-1"></i>Add User
@@ -53,35 +69,62 @@
                 <h5 class="mb-0">System Users</h5>
             </div>
             <div class="card-body">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i>
-                    User management functionality will be integrated with database in the next phase.
-                </div>
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Demo Lecturer
-                        <span class="badge bg-primary">Lecturer</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Coordinator User
-                        <span class="badge bg-warning">Coordinator</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        HR Manager
-                        <span class="badge bg-success">HR Manager</span>
-                    </li>
-                </ul>
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        No users found in the system.
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <td>@user.FirstName @user.LastName</td>
+                                        <td>@user.Email</td>
+                                        <td>
+                                            <span class="badge @GetRoleBadgeClass(user.Role)">@user.Role</span>
+                                        </td>
+                                        <td>
+                                            <form method="post" asp-action="DeleteUser" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                                <input type="hidden" name="userId" value="@user.Id" />
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-trash me-1"></i>Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        document.getElementById('addUserForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('User added successfully! This will be integrated with database in the next phase.');
-            this.reset();
-        });
-    </script>
+@functions {
+    private string GetRoleBadgeClass(string role)
+    {
+        return role switch
+        {
+            "Lecturer" => "bg-primary",
+            "Coordinator" => "bg-warning",
+            "HRManager" => "bg-success",
+            _ => "bg-secondary"
+        };
+    }
 }

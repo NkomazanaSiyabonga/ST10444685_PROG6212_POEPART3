@@ -31,16 +31,23 @@
 
         public User Login(string email, string password, string role)
         {
-            var user = _users.FirstOrDefault(u =>
-                u.Email.ToLower() == email.ToLower() &&
-                u.Role == role);
+            // First, find the user by email (ignore role for initial lookup)
+            var user = _users.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
 
-            if (user != null && _passwords.ContainsKey(user.Id) && _passwords[user.Id] == password)
+            if (user == null)
             {
-                return user;
+                throw new Exception("Invalid email or password.");
             }
 
-            throw new Exception("Invalid email, password, or role.");
+            // Check password
+            if (!_passwords.ContainsKey(user.Id) || _passwords[user.Id] != password)
+            {
+                throw new Exception("Invalid email or password.");
+            }
+
+            // Role parameter is just for guidance - don't enforce strict matching
+            // This allows users to log in regardless of which role they select from dropdown
+            return user;
         }
 
         public User GetUserById(string userId)

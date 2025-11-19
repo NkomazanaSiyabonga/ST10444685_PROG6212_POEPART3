@@ -10,7 +10,7 @@
 {
     <div class="alert alert-info">
         <p>You haven't submitted any claims yet.</p>
-        <a href="@Url.Action("Index")" class="btn btn-primary">Submit Your First Claim</a>
+        <a href="@Url.Action("Create")" class="btn btn-primary">Submit Your First Claim</a>
     </div>
 }
 else
@@ -25,6 +25,7 @@ else
                     <th>Rate</th>
                     <th>Total Amount</th>
                     <th>Status</th>
+                    <th>Notes</th>
                     <th>Documents</th>
                 </tr>
             </thead>
@@ -49,9 +50,33 @@ else
                                 case ProgrammingPOE.Models.ClaimStatus.Approved:
                                     <span class="badge bg-success">Approved</span>
                                     break;
-                                case ProgrammingPOE.Models.ClaimStatus.Rejected:
-                                    <span class="badge bg-danger">Rejected</span>
+                                case ProgrammingPOE.Models.ClaimStatus.RejectedByCoordinator:
+                                    <span class="badge bg-danger">Rejected by Coordinator</span>
                                     break;
+                                case ProgrammingPOE.Models.ClaimStatus.RejectedByHR:
+                                    <span class="badge bg-danger">Rejected by HR</span>
+                                    break;
+                                case ProgrammingPOE.Models.ClaimStatus.ReturnedForCorrection:
+                                    <span class="badge bg-warning">Correction Required</span>
+                                    break;
+                                default:
+                                    <span class="badge bg-secondary">Unknown</span>
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(claim.RejectionNotes))
+                            {
+                                <button type="button" class="btn btn-sm btn-outline-info"
+                                        data-bs-toggle="popover"
+                                        data-bs-title="Rejection Notes"
+                                        data-bs-content="@claim.RejectionNotes">
+                                    <i class="fas fa-comment me-1"></i>View Notes
+                                </button>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No notes</span>
                             }
                         </td>
                         <td>
@@ -59,10 +84,13 @@ else
                             {
                                 @foreach (var doc in claim.SupportingDocuments)
                                 {
-                                    <a href="@Url.Action("Download", "Documents", new { fileName = doc.FilePath })"
-                                       class="badge bg-secondary text-decoration-none">
-                                        @doc.FileName
-                                    </a>
+                                    <div class="mb-1">
+                                        <a href="@Url.Action("Download", "Documents", new { fileName = doc.FilePath })"
+                                           class="btn btn-sm btn-outline-primary"
+                                           target="_blank">
+                                            <i class="fas fa-download me-1"></i>@doc.FileName
+                                        </a>
+                                    </div>
                                 }
                             }
                             else
@@ -78,6 +106,18 @@ else
 }
 
 <div class="mt-3">
-    <a href="@Url.Action("Index")" class="btn btn-primary">Submit New Claim</a>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Submit New Claim</a>
     <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Back to Home</a>
 </div>
+
+@section Scripts {
+    <script>
+        // Initialize popovers
+        document.addEventListener('DOMContentLoaded', function() {
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+        });
+    </script>
+}

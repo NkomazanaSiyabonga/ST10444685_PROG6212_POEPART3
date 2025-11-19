@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using ProgrammingPOE.Data;
 using ProgrammingPOE.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,12 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Add Entity Framework with SQL Server
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Add our custom services
-builder.Services.AddScoped<IClaimService, ClaimService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IClaimService, DatabaseClaimService>();
+builder.Services.AddScoped<IAuthService, DatabaseAuthService>();
+builder.Services.AddScoped<IValidationService, ValidationService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-// Add session support (REQUIRED for authentication)
+// Add session support
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -35,18 +43,11 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
-// ADD THIS LINE - Session middleware must come before Authorization
 app.UseSession();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-builder.Services.AddScoped<IValidationService, ValidationService>();
-
-builder.Services.AddScoped<IReportService, ReportService>();
 
 app.Run();

@@ -4,12 +4,12 @@ namespace ProgrammingPOE.Models
 {
     public enum ClaimStatus
     {
-        Submitted,      // Lecturer submitted
-        Verified,       // Coordinator verified
-        Approved,       // HR Manager approved
+        Submitted,              // Lecturer submitted
+        Verified,               // Coordinator verified
+        Approved,               // HR Manager approved
         RejectedByCoordinator,  // Coordinator rejected
-        RejectedByHR,   // HR Manager rejected
-        ReturnedForCorrection  // Sent back to lecturer
+        RejectedByHR,           // HR Manager rejected
+        ReturnedForCorrection   // Sent back to lecturer for corrections
     }
 
     public class Claim
@@ -34,11 +34,15 @@ namespace ProgrammingPOE.Models
         public decimal HourlyRate { get; set; }
 
         [Display(Name = "Total Amount")]
-        public decimal TotalAmount => HoursWorked * HourlyRate;
+        public decimal TotalAmount
+        {
+            get { return HoursWorked * HourlyRate; }
+            private set { } // Add this empty setter for EF
+        }
 
         [Display(Name = "Additional Notes")]
         [StringLength(500)]
-        public string AdditionalNotes { get; set; } // REMOVED [Required]
+        public string AdditionalNotes { get; set; }
 
         public ClaimStatus Status { get; set; } = ClaimStatus.Submitted;
 
@@ -57,6 +61,12 @@ namespace ProgrammingPOE.Models
 
         [Display(Name = "Approved By")]
         public string ApprovedBy { get; set; }
+
+        [Display(Name = "Verification Date")]
+        public DateTime? VerificationDate { get; set; }
+
+        [Display(Name = "Approval Date")]
+        public DateTime? ApprovalDate { get; set; }
 
         public virtual ICollection<SupportingDocument> SupportingDocuments { get; set; } = new List<SupportingDocument>();
     }

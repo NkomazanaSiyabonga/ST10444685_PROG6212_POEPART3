@@ -24,6 +24,7 @@ namespace ProgrammingPOE.Controllers
         {
             try
             {
+                // Remove role validation - just pass the credentials
                 var user = _authService.Login(email, password, role);
 
                 // Store user info in session
@@ -32,12 +33,14 @@ namespace ProgrammingPOE.Controllers
                 HttpContext.Session.SetString("UserName", $"{user.FirstName} {user.LastName}");
                 HttpContext.Session.SetString("UserEmail", user.Email);
 
+                TempData["SuccessMessage"] = $"Welcome back, {user.FirstName}!";
                 return RedirectToAction("Dashboard", "Home");
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
                 ViewBag.Role = role;
+                ViewBag.Email = email;
                 return View();
             }
         }

@@ -10,23 +10,14 @@ namespace ProgrammingPOE.Services
         private static int _nextClaimId = 1;
         private static int _nextDocumentId = 1;
         private readonly IWebHostEnvironment _environment;
-
-        public ClaimService(IWebHostEnvironment environment)
-        {
-            _environment = environment;
-        }
-
-        // Add this field to ClaimService class
         private readonly IValidationService _validationService;
 
-        // Update constructor
         public ClaimService(IWebHostEnvironment environment, IValidationService validationService)
         {
             _environment = environment;
             _validationService = validationService;
         }
 
-        // Update CreateClaim method to include validation
         public Claim CreateClaim(Claim claim, string userId, List<IFormFile> files)
         {
             // Validate claim before processing
@@ -43,7 +34,7 @@ namespace ProgrammingPOE.Services
 
             _claims.Add(claim);
 
-            // Handle file uploads (existing code)
+            // Handle file uploads
             if (files != null && files.Any())
             {
                 foreach (var file in files)
@@ -144,6 +135,22 @@ namespace ProgrammingPOE.Services
             if (claim != null)
             {
                 claim.Status = status;
+
+                // Set the appropriate fields based on status
+                if (status == ClaimStatus.Verified)
+                {
+                    claim.VerifiedBy = approvedBy;
+                    claim.VerificationDate = DateTime.Now;
+                }
+                else if (status == ClaimStatus.Approved)
+                {
+                    claim.ApprovedBy = approvedBy;
+                    claim.ApprovalDate = DateTime.Now;
+                }
+                else if (status == ClaimStatus.RejectedByCoordinator || status == ClaimStatus.RejectedByHR)
+                {
+                    claim.RejectedBy = approvedBy;
+                }
             }
         }
 
@@ -156,7 +163,7 @@ namespace ProgrammingPOE.Services
                 TotalClaims = userClaims.Count,
                 PendingClaims = userClaims.Count(c => c.Status == ClaimStatus.Submitted),
                 ApprovedClaims = userClaims.Count(c => c.Status == ClaimStatus.Approved),
-                RejectedClaims = userClaims.Count(c => c.Status == ClaimStatus.Rejected),
+                RejectedClaims = userClaims.Count(c => c.Status == ClaimStatus.RejectedByCoordinator || c.Status == ClaimStatus.RejectedByHR),
                 TotalAmount = userClaims.Where(c => c.Status == ClaimStatus.Approved).Sum(c => c.TotalAmount)
             };
         }
@@ -166,19 +173,17 @@ namespace ProgrammingPOE.Services
             // In a real application, this would come from a database
             // For now, we'll use a simple mapping
             var rateMap = new Dictionary<string, decimal>
-    {
-        { "Demo Lecturer", 250.00m },
-        { "John Smith", 200.00m },
-        { "Sarah Johnson", 220.00m },
-        { "Mike Wilson", 180.00m }
-    };
+            {
+                { "Demo Lecturer", 250.00m },
+                { "John Smith", 200.00m },
+                { "Sarah Johnson", 220.00m },
+                { "Mike Wilson", 180.00m }
+            };
 
             return rateMap.ContainsKey(lecturerName) ? rateMap[lecturerName] : 150.00m;
         }
-    }
 
-    // Add these methods to ClaimService class
-public List<Claim> GetVerifiedClaims()
+        public List<Claim> GetVerifiedClaims()
         {
             var claims = _claims
                 .Where(c => c.Status == ClaimStatus.Verified)

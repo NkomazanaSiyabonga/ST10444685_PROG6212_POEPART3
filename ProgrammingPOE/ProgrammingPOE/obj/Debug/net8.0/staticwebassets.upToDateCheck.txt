@@ -64,9 +64,13 @@ wwwroot\lib\jquery\LICENSE.txt
 wwwroot\uploads\067d66c1-a7b4-4968-be38-488329648d41_Assignment2.docx
 wwwroot\uploads\13f32bb6-4619-41f3-88ad-5362f1cec696_Programming POE Part 1 Project Plan.xlsx
 wwwroot\uploads\1560f3f3-7790-4a9e-87a9-a35bc87d7fa4_ST10444685_INSY6212_ICETASK5.docx
+wwwroot\uploads\326cf7a6-86f2-4c16-a923-2903ad521852_Lecturer Claim Sheet.docx
 wwwroot\uploads\3b44b4b4-044e-4113-b688-1e1f5d7dae01_ST10444685_INSY6212_ICETASK5.docx
+wwwroot\uploads\3bad528a-987f-488f-8c86-1cde2ec382b5_Lecturer Claim Sheet.docx
 wwwroot\uploads\7607d8f3-989e-4021-bc22-d50cf7dda103_ST10444685_INSY6212_ICETASK5.docx
+wwwroot\uploads\7b3af933-c8ba-4df7-a42e-f87e08aee10d_Lecturer Claim Sheet.docx
 wwwroot\uploads\81a2ae92-ce90-4770-a06a-c442926517f2_ST10444685_INSY6212_ICETASK5.docx
 wwwroot\uploads\ab07472e-d4fc-4165-8755-23181a94ff3d_ST10444685_INSY6212_ICETASK5.docx
+wwwroot\uploads\b24045d2-6df9-4457-b0f2-9eeb04a0e0a3_ST10444685_INSY6212_ICETASK5.docx
 wwwroot\uploads\c0ea4532-d3d0-45b8-a832-825ca5e4b3ba_ST10444685_INSY6212_ICETASK5.docx
 wwwroot\uploads\e776f79a-fa82-4a94-a587-db139fabadeb_ST10444685_INSY6212_ICETASK5.docx

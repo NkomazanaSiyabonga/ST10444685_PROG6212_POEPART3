@@ -8,12 +8,15 @@
         <div class="card shadow">
             <div class="card-header bg-primary text-white text-center">
                 <h3><i class="fas fa-sign-in-alt me-2"></i>Login</h3>
-                <p class="mb-0">Role: <strong>@role</strong></p>
+                <p class="mb-0">Selected Role: <strong>@role</strong></p>
+                <small class="text-white-50">(You can login with any role - system will detect your actual role)</small>
             </div>
             <div class="card-body p-4">
                 @if (ViewBag.Error != null)
                 {
-                    <div class="alert alert-danger">@ViewBag.Error</div>
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>@ViewBag.Error
+                    </div>
                 }
 
                 <form method="post">
@@ -38,6 +41,14 @@
 
                 <div class="mt-3 text-center">
                     <a href="@Url.Action("Register", "Account")">Don't have an account? Register here</a>
+                </div>
+
+                <!-- Role Selection Help -->
+                <div class="mt-3 p-3 bg-light rounded">
+                    <h6><i class="fas fa-info-circle me-2"></i>Login Help:</h6>
+                    <small class="text-muted">
+                        Select your role from the home page. Your actual role will be detected automatically from your account.
+                    </small>
                 </div>
             </div>
         </div>

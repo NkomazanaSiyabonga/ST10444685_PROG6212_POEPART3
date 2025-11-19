@@ -49,8 +49,17 @@ else
                                 case ProgrammingPOE.Models.ClaimStatus.Approved:
                                     <span class="badge bg-success">Approved</span>
                                     break;
-                                case ProgrammingPOE.Models.ClaimStatus.Rejected:
-                                    <span class="badge bg-danger">Rejected</span>
+                                case ProgrammingPOE.Models.ClaimStatus.RejectedByCoordinator:
+                                    <span class="badge bg-danger">Rejected by Coordinator</span>
+                                    break;
+                                case ProgrammingPOE.Models.ClaimStatus.RejectedByHR:
+                                    <span class="badge bg-danger">Rejected by HR</span>
+                                    break;
+                                case ProgrammingPOE.Models.ClaimStatus.ReturnedForCorrection:
+                                    <span class="badge bg-warning">Correction Required</span>
+                                    break;
+                                default:
+                                    <span class="badge bg-secondary">Unknown</span>
                                     break;
                             }
                         </td>

@@ -611,3 +611,11 @@ C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART2\ProgrammingPO
 C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART2\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.pdb
 C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART2\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.genruntimeconfig.cache
 C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART2\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ref\ProgrammingPOE.Tests.dll
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\bin\Debug\net8.0\CoverletSourceRootsMapping_ProgrammingPOE.Tests
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.csproj.AssemblyReference.cache
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\MvcTestingAppManifest.json
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.AssemblyInfoInputs.cache
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.AssemblyInfo.cs
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.csproj.CoreCompileInputs.cache
+C:\Users\lab_services_student\Desktop\ST10444685_PROG6212_POEPART3\ProgrammingPOE\ProgrammingPOE.Tests\obj\Debug\net8.0\ProgrammingPOE.Tests.sourcelink.json

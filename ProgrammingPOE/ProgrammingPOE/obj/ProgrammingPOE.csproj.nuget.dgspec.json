@@ -11,7 +11,7 @@
         "projectName": "ProgrammingPOE",
         "projectPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\ProgrammingPOE.csproj",
         "packagesPath": "C:\\Users\\lab_services_student\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPart3\\ProgrammingPOE\\ProgrammingPOE\\obj\\",
+        "outputPath": "C:\\Users\\lab_services_student\\Desktop\\ST10444685_PROG6212_POEPART3\\ProgrammingPOE\\ProgrammingPOE\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -61,6 +65,16 @@
               "version": "[8.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.0, )"
             },
